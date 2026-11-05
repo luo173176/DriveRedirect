@@ -1,0 +1,3 @@
+DriveRedirect test payload for Acme Private.
+Expected default location: C:\Program Files\AcmePrivate
+Expected redirected location: D:\Program Files\AcmePrivate

@@ -1,0 +1,74 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="DriveRedirect"
+           Manufacturer="DriveRedirect"
+           Version="1.0.0"
+           UpgradeCode="E3F9A9D4-7F3E-4C4D-A0AD-4B5A6C7D8E93"
+           Scope="perMachine"
+           Compressed="yes">
+    <MajorUpgrade DowngradeErrorMessage="已安装更新版本的 DriveRedirect。" />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="DriveRedirect" />
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder" />
+    <StandardDirectory Id="DesktopFolder" />
+
+    <Feature Id="MainFeature" Title="DriveRedirect" Level="1">
+      <ComponentGroupRef Id="AppFiles" />
+      <ComponentRef Id="ServiceComponent" />
+      <ComponentRef Id="LauncherComponent" />
+      <ComponentRef Id="DesktopComponent" />
+    </Feature>
+
+    <Component Id="ServiceComponent" Directory="INSTALLFOLDER" Guid="{B0C6F6A1-4C0B-4F1A-9C7A-1E2D3F4A5B60}">
+      <File Id="ServiceExe" Source="$(var.SourceDir)\DriveRedirect.Service.exe" KeyPath="yes" />
+      <ServiceInstall Id="ServiceInstall"
+                      Name="DriveRedirect Service"
+                      DisplayName="DriveRedirect 后台监控服务"
+                      Description="监控安装器并在可靠支持时自动把安装路径重定向到 D 盘。"
+                      Start="auto"
+                      Type="ownProcess"
+                      ErrorControl="normal"
+                      Account="LocalSystem" />
+      <ServiceControl Id="ServiceControl"
+                      Name="DriveRedirect Service"
+                      Start="install"
+                      Stop="both"
+                      Remove="uninstall"
+                      Wait="yes" />
+    </Component>
+
+    <Component Id="LauncherComponent" Directory="INSTALLFOLDER" Guid="{C1D7E7B2-5D1C-4A2B-8D8B-2F3E4A5B6C71}">
+      <File Id="LauncherExe" Source="$(var.SourceDir)\DriveRedirect.Launcher.exe" KeyPath="yes" />
+    </Component>
+
+    <Component Id="DesktopComponent" Directory="INSTALLFOLDER" Guid="{D2E8F8C3-6E2D-4B3C-9E9C-3A4F5B6C7D82}">
+      <File Id="DesktopExe" Source="$(var.SourceDir)\DriveRedirect.Desktop.exe" KeyPath="yes" />
+      <Shortcut Id="StartMenuShortcut"
+                Directory="ProgramMenuFolder"
+                Name="DriveRedirect"
+                Target="[INSTALLFOLDER]DriveRedirect.Desktop.exe"
+                WorkingDirectory="INSTALLFOLDER"
+                Advertise="no" />
+      <Shortcut Id="DesktopShortcut"
+                Directory="DesktopFolder"
+                Name="DriveRedirect"
+                Target="[INSTALLFOLDER]DriveRedirect.Desktop.exe"
+                WorkingDirectory="INSTALLFOLDER"
+                Advertise="no" />
+    </Component>
+
+    <CustomAction Id="RestoreShellOnUninstall"
+                  FileRef="LauncherExe"
+                  ExeCommand="--restore-shell-quiet"
+                  Execute="deferred"
+                  Impersonate="no"
+                  Return="ignore" />
+
+    <InstallExecuteSequence>
+      <Custom Action="RestoreShellOnUninstall" Before="RemoveFiles" Condition="REMOVE~=&quot;ALL&quot;" />
+    </InstallExecuteSequence>
+
+  </Package>
+</Wix>

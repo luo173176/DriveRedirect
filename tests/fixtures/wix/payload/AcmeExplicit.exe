@@ -1,0 +1,3 @@
+DriveRedirect test payload for Acme Explicit.
+Expected default location: C:\Program Files\AcmeExplicit
+Expected redirected location: D:\Program Files\AcmeExplicit

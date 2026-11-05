@@ -1,0 +1,22 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Acme Explicit"
+           Manufacturer="Acme Test"
+           Version="1.0.0"
+           UpgradeCode="4F0AA293-40B4-4C63-9C57-2A7D27F6E2B1"
+           Scope="perMachine">
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Acme Explicit is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLDIR" Name="AcmeExplicit">
+        <Component Id="MainComponent" Guid="9B48E180-8F1D-4BF9-A0E3-6A7D3E2D8B11">
+          <File Id="AcmeExplicitFile" Source="payload\AcmeExplicit.exe" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="Acme Explicit" Level="1">
+      <ComponentRef Id="MainComponent" />
+    </Feature>
+  </Package>
+</Wix>

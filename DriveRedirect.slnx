@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DriveRedirect.Core/DriveRedirect.Core.csproj" />
+    <Project Path="src/DriveRedirect.Desktop/DriveRedirect.Desktop.csproj" />
+    <Project Path="src/DriveRedirect.Infrastructure/DriveRedirect.Infrastructure.csproj" />
+    <Project Path="src/DriveRedirect.Launcher/DriveRedirect.Launcher.csproj" />
+    <Project Path="src/DriveRedirect.Service/DriveRedirect.Service.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DriveRedirect.Tests/DriveRedirect.Tests.csproj" />
+  </Folder>
+</Solution>

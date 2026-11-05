@@ -1,0 +1,16 @@
+artifacts/
+bin/
+obj/
+.vs/
+*.user
+*.suo
+TestResults/
+logs/
+*.db
+*.db-shm
+*.db-wal
+tests/fixtures/packages/
+tests/fixtures/*/bin/
+tests/fixtures/*/obj/
+installer/DriveRedirect.msi
+installer/*.wixpdb

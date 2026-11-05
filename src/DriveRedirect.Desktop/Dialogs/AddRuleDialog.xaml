@@ -1,0 +1,93 @@
+<Window x:Class="DriveRedirect.Desktop.Dialogs.AddRuleDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="添加路径规则"
+        Width="560"
+        Height="650"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        Background="{DynamicResource AppBackgroundBrush}"
+        ShowInTaskbar="False">
+    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="56" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="76" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}" MouseLeftButtonDown="Header_OnMouseLeftButtonDown">
+                <Grid Margin="24,0,10,0">
+                    <TextBlock Text="添加路径规则" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" />
+                    <Button Content="&#xE8BB;" Style="{StaticResource IconButtonStyle}" FontFamily="{StaticResource IconFont}"
+                            HorizontalAlignment="Right" Click="Cancel_OnClick" ToolTip="关闭" />
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="28,24,28,20">
+                    <TextBlock Text="规则类型" Style="{StaticResource CaptionText}" Margin="0,0,0,7" />
+                    <ComboBox x:Name="KindCombo" SelectionChanged="KindCombo_OnSelectionChanged" SelectedIndex="0">
+                        <ComboBoxItem Content="路径映射" Tag="Mapping" />
+                        <ComboBoxItem Content="应用白名单" Tag="AppWhitelist" />
+                        <ComboBoxItem Content="应用黑名单" Tag="AppBlacklist" />
+                        <ComboBoxItem Content="受保护目录" Tag="ProtectedPath" />
+                    </ComboBox>
+
+                    <TextBlock Text="规则名称" Style="{StaticResource CaptionText}" Margin="0,18,0,7" />
+                    <TextBox x:Name="NameBox" />
+
+                    <StackPanel x:Name="SourcePanel">
+                        <TextBlock x:Name="SourceLabel" Text="C 盘源路径" Style="{StaticResource CaptionText}" Margin="0,18,0,7" />
+                        <TextBox x:Name="SourceBox" />
+                        <TextBlock x:Name="SourceHint" Style="{StaticResource SubtleText}" Margin="2,6,0,0"
+                                   Text="例如 C:\Program Files\Example" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="TargetPanel">
+                        <TextBlock Text="D 盘目标路径" Style="{StaticResource CaptionText}" Margin="0,18,0,7" />
+                        <TextBox x:Name="TargetBox" />
+                        <TextBlock Style="{StaticResource SubtleText}" Margin="2,6,0,0"
+                                   Text="目标必须位于固定 D 盘，目录层级将按源路径相对结构保留。" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <Grid Margin="0,18,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="120" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,14,0">
+                            <TextBlock Text="优先级" Style="{StaticResource CaptionText}" Margin="0,0,0,7" />
+                            <TextBox x:Name="PriorityBox" Text="0" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
+                            <CheckBox x:Name="AllowAppDataCheck" Content="允许 AppData" />
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="备注" Style="{StaticResource CaptionText}" Margin="0,18,0,7" />
+                    <TextBox x:Name="NoteBox" Height="68" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" />
+
+                    <Border Background="{DynamicResource AccentSoftBrush}" CornerRadius="10" Padding="13,10" Margin="0,20,0,0">
+                        <TextBlock Foreground="{DynamicResource AccentBrush}" TextWrapping="Wrap" FontSize="12"
+                                   Text="路径映射会按最长匹配源目录生效。白名单仅对匹配应用名称或通配符的安装器开放 AppData 定向映射；黑名单优先阻止重定向。" />
+                    </Border>
+
+                    <TextBlock x:Name="ValidationText" Foreground="{DynamicResource DangerBrush}" FontSize="12"
+                               TextWrapping="Wrap" Margin="0,12,0,0" Visibility="Collapsed" />
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Grid.Row="2" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0">
+                <Grid Margin="24,0">
+                    <TextBlock Text="所有路径在服务端再次校验。" Style="{StaticResource SubtleText}" VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Content="取消" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,10,0" Click="Cancel_OnClick" />
+                        <Button Content="添加规则" Style="{StaticResource PrimaryButtonStyle}" Click="Add_OnClick" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

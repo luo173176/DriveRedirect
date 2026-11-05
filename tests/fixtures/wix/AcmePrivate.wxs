@@ -1,0 +1,22 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Acme Private"
+           Manufacturer="Acme Test"
+           Version="1.0.0"
+           UpgradeCode="E6D4A0A1-4B8D-49F4-8E2C-6C7F2B5C9D42"
+           Scope="perMachine">
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Acme Private is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="AcmePrivateDir" Name="AcmePrivate">
+        <Component Id="MainComponent" Guid="C6B7C22A-45EB-4F12-8F52-1E5A0D4A3C77">
+          <File Id="AcmePrivateFile" Source="payload\AcmePrivate.exe" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="Acme Private" Level="1">
+      <ComponentRef Id="MainComponent" />
+    </Feature>
+  </Package>
+</Wix>
